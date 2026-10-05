@@ -1,27 +1,8 @@
 import math
 
-POSITIONS = {
-    "GK": 0,
-    "CB": 1,
-    "LB": 2,
-    "RB": 3,
-    "DMF": 4,
-    "CMF": 5,
-    "LMF": 6,
-    "RMF": 7,
-    "AMF": 8,
-    "LWF": 9,
-    "RWF": 10,
-    "SS": 11,
-    "CF": 12
-}
+POSITIONS = { "GK": 0, "CB": 1, "LB": 2, "RB": 3, "DMF": 4, "CMF": 5, "LMF": 6, "RMF": 7, "AMF": 8, "LWF": 9, "RWF": 10, "SS": 11, "CF": 12 }
 
-WEAK_FOOT_ACCURACY = {
-    "Low": 0,
-    "Medium": 1,
-    "High": 2,
-    "Very High": 3
-}
+WEAK_FOOT_ACCURACY = { "Low": 0, "Medium": 1, "High": 2, "Very High": 3 }
 
 WEIGHTS = [ 186, 136, 49, 49, 61, 37, 12, 12, 37, 49, 49, 62, 99, 0, 14, 61, 61, 61, 98, 98, 98, 171, 159, 159, 173, 210, 13, 27, 86, 86, 122, 171, 171, 171, 196, 159, 159, 210, 123, 0, 14, 61, 61, 37, 98, 110, 122, 122, 159, 159, 123, 62, 0, 0, 37, 37, 24, 49, 73, 61, 73, 86, 86, 86, 37, 27, 41, 61, 61, 122, 208, 135, 135, 196, 73, 73, 99, 37, 40, 68, 147, 147, 122, 159, 196, 196, 159, 98, 98, 74, 12, 0, 27, 24, 24, 37, 73, 86, 86, 184, 159, 159, 284, 358, 0, 14, 24, 24, 12, 12, 24, 24, 12, 12, 12, 12, 12, 0, 14, 24, 24, 12, 12, 24, 24, 12, 12, 12, 12, 12, 0, 55, 24, 24, 61, 24, 12, 12, 24, 24, 24, 25, 62, 13, 286, 147, 147, 220, 86, 49, 49, 24, 12, 12, 0, 0, 0, 191, 86, 86, 122, 86, 24, 24, 24, 12, 12, 12, 12, 0, 82, 37, 37, 98, 37, 12, 12, 12, 12, 12, 12, 12, 53, 27, 24, 24, 49, 73, 24, 24, 73, 61, 61, 99, 123, 13, 136, 220, 220, 61, 61, 196, 196, 98, 220, 220, 86, 99, 40, 150, 184, 184, 61, 86, 159, 159, 86, 159, 159, 99, 123, 80, 204, 98, 98, 122, 49, 24, 24, 24, 37, 37, 37, 86, 0, 0, 24, 24, 12, 24, 61, 61, 24, 73, 73, 74, 86, 133, 109, 37, 37, 37, 12, 12, 12, 12, 24, 24, 37, 62, 279, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 226, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 226, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 196, 196, 196, 196, 147, 147, 86, 49, 49, 49, 37, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 14, 24, 24, 24, 24, 24, 24, 24, 24, 24, 12, 12 ]
 
@@ -31,66 +12,61 @@ if len(WEIGHTS) != 364:
     )
 
 STAT_KEYS = (
-    "offensiveAwareness",
-    "ballControl",
-    "dribbling",
-    "tightPossession",
-    "lowPass",
-    "loftedPass",
-    "finishing",
-    "heading",
-    "setPieceTaking",
-    "curl",
-    "defensiveAwareness",
-    "ballWinning",
-    "defensiveEngagement",
-    "aggression",
-    "gkAwareness",
-    "gkCatching",
-    "gkClearing",
-    "gkReflexes",
-    "gkReach",
-    "speed",
-    "acceleration",
-    "kickingPower",
-    "jump",
-    "physicalContact",
-    "balance",
-    "stamina"
+    "Attacking Awareness",
+    "Ball Control",
+    "Dribbling",
+    "Tight Possession",
+    "Low Pass",
+    "Lofted Pass",
+    "Finishing",
+    "Heading",
+    "Set Piece Taking",
+    "Curl",
+    "Defensive Awareness",
+    "Tackling",
+    "Defensive Engagement",
+    "Aggression",
+    "GK Awareness",
+    "GK Catching",
+    "GK Parrying",
+    "GK Reflexes",
+    "GK Reach",
+    "Speed",
+    "Acceleration",
+    "Kicking Power",
+    "Jumping",
+    "Physical Contact",
+    "Balance",
+    "Stamina"
 )
 
 STAT_OFFSETS = {
-    "offensiveAwareness": 13,
-    "ballControl": 26,
-    "dribbling": 39,
-    "tightPossession": 52,
-    "lowPass": 65,
-    "loftedPass": 78,
-    "finishing": 91,
-    "setPieceTaking": 104,
-    "curl": 117,
-    "heading": 130,
-    "defensiveAwareness": 143,
-    "ballWinning": 156,
-    "aggression": 169,
-    "kickingPower": 182,
-    "speed": 195,
-    "acceleration": 208,
-    "physicalContact": 221,
-    "balance": 234,
-    "jump": 247,
-    "gkAwareness": 260,
-    "gkReach": 273,
-    "gkCatching": 286,
-    "gkClearing": 299,
-    "gkReflexes": 312,
-    "stamina": 325,
-    "defensiveEngagement": 351
-}
-
-STAT_INDEX = {
-    stat: index
-    for index, stat in enumerate(STAT_KEYS)
+    "Attacking Awareness": 13,
+    "Ball Control": 26,
+    "Dribbling": 39,
+    "Tight Possession": 52,
+    "Low Pass": 65,
+    "Lofted Pass": 78,
+    "Finishing": 91,
+    "Set Piece Taking": 104,
+    "Curl": 117,
+    "Heading": 130,
+    "Defensive Awareness": 143,
+    "Tackling": 156,
+    "Aggression": 169,
+    "Kicking Power": 182,
+    "Speed": 195,
+    "Acceleration": 208,
+    "Physical Contact": 221,
+    "Balance": 234,
+    "Jumping": 247,
+    "GK Awareness": 260,
+    "GK Reach": 273,
+    "GK Catching": 286,
+    "GK Parrying": 299,
+    "GK Reflexes": 312,
+    "Stamina": 325,
+    "Defensive Engagement": 351
 }
 
 STAT_OFFSET_TUPLE = tuple(
@@ -98,7 +74,7 @@ STAT_OFFSET_TUPLE = tuple(
     for stat in STAT_KEYS
 )
 
-MANAGER_SKILL_MULTIPLIERS = [
+MANAGER_SKILL_MULTIPLIERS = (
     0.65,
     0.6675,
     0.685,
@@ -148,57 +124,66 @@ MANAGER_SKILL_MULTIPLIERS = [
     1.036,
     1.036,
     1.036
-]
+)
 
 PROGRESSION_MAX = 25
 
 PROGRESSION_SLIDERS = {
     "Shooting": (
-        "finishing",
-        "setPieceTaking",
-        "curl"
+        "Finishing",
+        "Set Piece Taking",
+        "Curl"
     ),
+
     "Passing": (
-        "lowPass",
-        "loftedPass"
+        "Low Pass",
+        "Lofted Pass"
     ),
+
     "Dribbling": (
-        "ballControl",
-        "dribbling",
-        "tightPossession"
+        "Ball Control",
+        "Dribbling",
+        "Tight Possession"
     ),
+
     "Dexterity": (
-        "offensiveAwareness",
-        "acceleration",
-        "balance"
+        "Attacking Awareness",
+        "Acceleration",
+        "Balance"
     ),
+
     "Lower Body Strength": (
-        "speed",
-        "kickingPower",
-        "stamina"
+        "Speed",
+        "Kicking Power",
+        "Stamina"
     ),
+
     "Aerial Strength": (
-        "heading",
-        "jump",
-        "physicalContact"
+        "Heading",
+        "Jumping",
+        "Physical Contact"
     ),
+
     "Defending": (
-        "defensiveAwareness",
-        "ballWinning",
-        "aggression",
-        "defensiveEngagement"
+        "Defensive Awareness",
+        "Tackling",
+        "Aggression",
+        "Defensive Engagement"
     ),
+
     "GK 1": (
-        "gkAwareness",
-        "jump"
+        "GK Awareness",
+        "Jumping"
     ),
+
     "GK 2": (
-        "gkClearing",
-        "gkReach"
+        "GK Parrying",
+        "GK Reach"
     ),
+
     "GK 3": (
-        "gkCatching",
-        "gkReflexes"
+        "GK Catching",
+        "GK Reflexes"
     )
 }
 
@@ -223,38 +208,33 @@ LEVEL_COSTS = tuple(
 )
 
 ABILITY_MAP = (
-    "offensiveAwareness",
-    "ballControl",
-    "tightPossession",
-    "dribbling",
-    "lowPass",
-    "loftedPass",
-    "finishing",
-    "setPieceTaking",
-    "curl",
-    "heading",
-    "defensiveAwareness",
-    "defensiveEngagement",
-    "ballWinning",
-    "aggression",
-    "kickingPower",
-    "speed",
-    "acceleration",
-    "balance",
-    "physicalContact",
-    "jump",
-    "gkAwareness",
-    "gkCatching",
-    "gkClearing",
-    "gkReflexes",
-    "gkReach",
-    "stamina"
+    "Attacking Awareness",
+    "Ball Control",
+    "Tight Possession",
+    "Dribbling",
+    "Low Pass",
+    "Lofted Pass",
+    "Finishing",
+    "Set Piece Taking",
+    "Curl",
+    "Heading",
+    "Defensive Awareness",
+    "Defensive Engagement",
+    "Tackling",
+    "Aggression",
+    "Kicking Power",
+    "Speed",
+    "Acceleration",
+    "Balance",
+    "Physical Contact",
+    "Jumping",
+    "GK Awareness",
+    "GK Catching",
+    "GK Parrying",
+    "GK Reflexes",
+    "GK Reach",
+    "Stamina"
 )
-
-ABILITY_ID = {
-    stat: index
-    for index, stat in enumerate(ABILITY_MAP)
-}
 
 CONDITION_LABELS = {
     0: "E",
@@ -265,26 +245,21 @@ CONDITION_LABELS = {
 }
 
 CONDITION_AFFECTED_AWARENESS = {
-    "offensiveAwareness",
-    "defensiveAwareness",
-    "defensiveEngagement",
-    "gkAwareness"
+    "Attacking Awareness",
+    "Defensive Awareness",
+    "Defensive Engagement",
+    "GK Awareness"
 }
 
 CONDITION_AFFECTED_PHYSICAL = {
-    "kickingPower",
-    "speed",
-    "acceleration",
-    "physicalContact",
-    "balance",
-    "jump",
-    "stamina"
+    "Kicking Power",
+    "Speed",
+    "Acceleration",
+    "Physical Contact",
+    "Balance",
+    "Jumping",
+    "Stamina"
 }
-
-CONDITION_MODIFIERS_A = None
-CONDITION_MODIFIERS_B = None
-CONDITION_MODIFIERS_D = None
-CONDITION_MODIFIERS_E = None
 
 
 def build_condition_table(*groups):
@@ -435,23 +410,20 @@ def validate_progression(
             "Level cap must be at least 1."
         )
 
-    missing = [
-        slider_name
-        for slider_name in PROGRESSION_SLIDERS
-        if slider_name not in sliders
-    ]
+    for slider_name in PROGRESSION_SLIDERS:
 
-    if missing:
-        raise ValueError(
-            "Missing progression slider(s): " +
-            ", ".join(missing)
-        )
+        if slider_name not in sliders:
+            raise ValueError(
+                f"Missing progression slider "
+                f"'{slider_name}'."
+            )
 
     for name, level in sliders.items():
 
         if name not in PROGRESSION_SLIDERS:
             raise ValueError(
-                f"Unknown progression slider '{name}'."
+                f"Unknown progression slider "
+                f"'{name}'."
             )
 
         if type(level) is not int:
@@ -497,7 +469,7 @@ def normalize_stats(stats):
     unknown = [
         stat
         for stat in stats
-        if stat not in STAT_INDEX
+        if stat not in STAT_OFFSETS
     ]
 
     if unknown:
@@ -562,7 +534,6 @@ def apply_manager_skill(
         return stats.copy()
 
     modified = stats.copy()
-
     gain = multiplier - 1
 
     for stat in STAT_KEYS:
@@ -573,17 +544,14 @@ def apply_manager_skill(
             99,
             value +
             math.floor(
-                value *
-                gain
+                value * gain
             )
         )
 
     return modified
 
 
-def get_manager_boost_ids(
-    boosts
-):
+def get_manager_boost_ids(boosts):
     if not boosts:
         return ()
 
@@ -603,34 +571,32 @@ def get_manager_boost_ids(
 
         if isinstance(boost, str):
 
-            if boost not in ABILITY_ID:
-                raise ValueError(
-                    f"Unknown stat '{boost}'."
+            try:
+                result.append(
+                    ABILITY_MAP.index(boost)
                 )
 
-            result.append(
-                ABILITY_ID[boost]
-            )
+            except ValueError:
+                raise ValueError(
+                    f"Unknown manager boost "
+                    f"'{boost}'."
+                )
 
             continue
 
         raise ValueError(
-            f"Unknown boost '{boost}'."
+            f"Unknown manager boost "
+            f"'{boost}'."
         )
 
     return tuple(result)
 
 
-def get_manager_bonus_stats(
-    manager
-):
+def get_manager_bonus_stats(manager):
     bonuses = {}
 
     for boost_id in get_manager_boost_ids(
-        manager.get(
-            "Boosts",
-            ()
-        )
+        manager.get("Boosts", ())
     ):
 
         stat = ABILITY_MAP[boost_id]
@@ -649,10 +615,7 @@ def apply_manager_boosts(
     modified = stats.copy()
 
     for boost_id in get_manager_boost_ids(
-        manager.get(
-            "Boosts",
-            ()
-        )
+        manager.get("Boosts", ())
     ):
 
         stat = ABILITY_MAP[boost_id]
@@ -695,7 +658,7 @@ def apply_condition(
 
     for stat in STAT_KEYS:
 
-        if stat == "aggression":
+        if stat == "Aggression":
             continue
 
         if stat in CONDITION_AFFECTED_AWARENESS:
@@ -718,9 +681,7 @@ def apply_condition(
     return modified
 
 
-def boost_magnitude(
-    booster
-):
+def boost_magnitude(booster):
     if not booster:
         return 0
 
@@ -734,10 +695,8 @@ def boost_magnitude(
             magnitude,
             (int, float)
         )
-        and
-        math.isfinite(magnitude)
-        and
-        magnitude > 0
+        and math.isfinite(magnitude)
+        and magnitude > 0
     ):
         return magnitude
 
@@ -760,9 +719,7 @@ def boost_magnitude(
     return maximum
 
 
-def js_round(
-    value
-):
+def js_round(value):
     return math.floor(
         value + 0.5
     )
@@ -789,14 +746,12 @@ def scaled_boost(
         booster
     )
 
-    source_stats = booster.get(
-        "Applied Stats",
-        {}
-    )
-
     scaled_stats = {}
 
-    for stat, value in source_stats.items():
+    for stat, value in booster.get(
+        "Applied Stats",
+        {}
+    ).items():
 
         numeric_value = float(value)
 
@@ -841,9 +796,10 @@ def get_scaled_booster_stats(
         {}
     ).items():
 
-        if stat not in STAT_INDEX:
+        if stat not in STAT_OFFSETS:
             raise ValueError(
-                f"Unknown stat '{stat}'."
+                f"Unknown booster stat "
+                f"'{stat}'."
             )
 
         result[stat] = (
@@ -868,9 +824,10 @@ def apply_player_boost(
         {}
     ).items():
 
-        if stat not in STAT_INDEX:
+        if stat not in STAT_OFFSETS:
             raise ValueError(
-                f"Unknown stat '{stat}'."
+                f"Unknown booster stat "
+                f"'{stat}'."
             )
 
         modified[stat] = (
@@ -881,9 +838,7 @@ def apply_player_boost(
     return modified
 
 
-def rating_contribution_value(
-    value
-):
+def rating_contribution_value(value):
     if value > 25:
         return value - 25
 
@@ -908,8 +863,8 @@ def rating_total(
         )
     )
 
-    for stat_index, stat in enumerate(
-        STAT_KEYS
+    for stat_index in range(
+        len(STAT_KEYS)
     ):
 
         total += (
@@ -919,7 +874,9 @@ def rating_total(
             ]
             *
             rating_contribution_value(
-                stats[stat]
+                stats[
+                    STAT_KEYS[stat_index]
+                ]
             )
         )
 
@@ -957,14 +914,14 @@ def compute_overall_ratings(
         stats
     )
 
-    value = max(
+    decimal_value = max(
         (total + 500) / 1000,
         40
     )
 
     decimal_rating = (
         js_round(
-            100 * value
+            100 * decimal_value
         )
         / 100
     )
@@ -1008,52 +965,6 @@ def compute_overall_rating(
         weak_foot_accuracy,
         stats
     )[0]
-
-
-def get_final_stat_from_progression_amount(
-    stat,
-    progression_amount,
-    base_stats,
-    proficiency,
-    manager_bonus_stats,
-    booster_1_stats,
-    booster_2_stats
-):
-    value = min(
-        99,
-        base_stats[stat] +
-        progression_amount
-    )
-
-    multiplier = get_manager_skill_multiplier(
-        proficiency
-    )
-
-    value = min(
-        99,
-        value +
-        math.floor(
-            value *
-            (multiplier - 1)
-        )
-    )
-
-    value += manager_bonus_stats.get(
-        stat,
-        0
-    )
-
-    value += booster_1_stats.get(
-        stat,
-        0
-    )
-
-    value += booster_2_stats.get(
-        stat,
-        0
-    )
-
-    return value
 
 
 def get_modified_stats(
@@ -1182,9 +1093,11 @@ def build_progression_context(
 
     for stat in STAT_KEYS:
 
-        base_value = base_stats[stat]
+        base_value = base_stats[
+            stat
+        ]
 
-        post_boost_bonus = (
+        fixed_bonus = (
             manager_bonus_stats.get(
                 stat,
                 0
@@ -1205,13 +1118,13 @@ def build_progression_context(
             PROGRESSION_MAX
         )
 
-        if stat == "jump":
+        if stat == "Jumping":
             maximum_progression_amount *= 2
 
         weight = (
             WEIGHTS[
-                STAT_OFFSETS[stat] +
-                position_index
+                STAT_OFFSETS[stat]
+                + position_index
             ]
         )
 
@@ -1240,7 +1153,7 @@ def build_progression_context(
                 )
             )
 
-            value += post_boost_bonus
+            value += fixed_bonus
 
             contributions[
                 progression_amount
@@ -1278,9 +1191,7 @@ def calculate_group_delta(
                 progression_amounts.get(
                     stat,
                     0
-                )
-                +
-                level
+                ) + level
             )
 
     delta = 0
@@ -1313,22 +1224,22 @@ def get_progression_group_options(
 
         slider_name = group[0]
 
-        for level, cost in enumerate(
-            LEVEL_COSTS
+        for level in range(
+            PROGRESSION_MAX + 1
         ):
+
+            cost = LEVEL_COSTS[level]
 
             if cost > available_points:
                 break
 
-            delta = calculate_group_delta(
-                group,
-                (level,),
-                context
-            )
-
             options.append({
                 "cost": cost,
-                "delta": delta,
+                "delta": calculate_group_delta(
+                    group,
+                    (level,),
+                    context
+                ),
                 "levels": {
                     slider_name: level
                 }
@@ -1362,18 +1273,16 @@ def get_progression_group_options(
             if total_cost > available_points:
                 break
 
-            delta = calculate_group_delta(
-                group,
-                (
-                    level_a,
-                    level_b
-                ),
-                context
-            )
-
             options.append({
                 "cost": total_cost,
-                "delta": delta,
+                "delta": calculate_group_delta(
+                    group,
+                    (
+                        level_a,
+                        level_b
+                    ),
+                    context
+                ),
                 "levels": {
                     slider_a: level_a,
                     slider_b: level_b
@@ -1430,8 +1339,13 @@ def auto_allocate_progression(
 
         for used_points, state in dp.items():
 
-            state_delta = state["delta"]
-            state_levels = state["levels"]
+            state_delta = state[
+                "delta"
+            ]
+
+            state_levels = state[
+                "levels"
+            ]
 
             for option in options:
 
@@ -1455,9 +1369,7 @@ def auto_allocate_progression(
                 if (
                     existing is None
                     or
-                    new_delta > existing["delta"]
-                    or
-                    new_delta == existing["delta"]
+                    new_delta >= existing["delta"]
                 ):
 
                     new_levels = dict(
@@ -1593,9 +1505,7 @@ def get_progression_input(
 
                 continue
 
-            test = dict(
-                sliders
-            )
+            test = dict(sliders)
 
             test[slider_name] = value
 
@@ -1626,7 +1536,6 @@ def get_progression_input(
                 continue
 
             sliders[slider_name] = value
-
             break
 
     validate_progression(
@@ -1744,6 +1653,7 @@ def print_progression(
         )
 
     print()
+
     print(
         f"Level Cap: {level_cap}"
     )
@@ -1771,9 +1681,9 @@ def print_booster(
         print("Disabled")
         return
 
-    name = booster.get(
-        "Name",
-        "Unnamed Booster"
+    print(
+        f"Name: "
+        f"{booster.get('Name', 'Unnamed Booster')}"
     )
 
     level = booster.get(
@@ -1783,10 +1693,6 @@ def print_booster(
 
     magnitude = boost_magnitude(
         booster
-    )
-
-    print(
-        f"Name: {name}"
     )
 
     print(
@@ -1862,12 +1768,8 @@ def print_manager_boosts(
 
     for boost_id in boost_ids:
 
-        stat = ABILITY_MAP[
-            boost_id
-        ]
-
         print(
-            f"  {stat} +1"
+            f"  {ABILITY_MAP[boost_id]} +1"
         )
 
 
@@ -1876,8 +1778,8 @@ MANAGERS = {
         "Name": "Didier Deschamps",
 
         "Boosts": (
-            "speed",
-            "ballControl"
+            "Speed",
+            "Ball Control"
         ),
 
         "Proficiency": {
@@ -1898,32 +1800,32 @@ PLAYER = {
     "Weak Foot Accuracy": "High",
 
     "Stats": {
-        "offensiveAwareness": 75,
-        "ballControl": 82,
-        "dribbling": 81,
-        "tightPossession": 83,
-        "lowPass": 76,
-        "loftedPass": 79,
-        "finishing": 75,
-        "heading": 56,
-        "setPieceTaking": 80,
-        "curl": 81,
-        "defensiveAwareness": 42,
-        "defensiveEngagement": 42,
-        "ballWinning": 44,
-        "aggression": 48,
-        "gkAwareness": 40,
-        "gkCatching": 40,
-        "gkClearing": 40,
-        "gkReflexes": 40,
-        "gkReach": 40,
-        "speed": 75,
-        "acceleration": 79,
-        "kickingPower": 75,
-        "jump": 62,
-        "physicalContact": 73,
-        "balance": 77,
-        "stamina": 73
+        "Attacking Awareness": 75,
+        "Ball Control": 82,
+        "Dribbling": 81,
+        "Tight Possession": 83,
+        "Low Pass": 76,
+        "Lofted Pass": 79,
+        "Finishing": 75,
+        "Heading": 56,
+        "Set Piece Taking": 80,
+        "Curl": 81,
+        "Defensive Awareness": 42,
+        "Defensive Engagement": 42,
+        "Tackling": 44,
+        "Aggression": 48,
+        "GK Awareness": 40,
+        "GK Catching": 40,
+        "GK Parrying": 40,
+        "GK Reflexes": 40,
+        "GK Reach": 40,
+        "Speed": 75,
+        "Acceleration": 79,
+        "Kicking Power": 75,
+        "Jumping": 62,
+        "Physical Contact": 73,
+        "Balance": 77,
+        "Stamina": 73
     }
 }
 
@@ -1941,10 +1843,10 @@ PLAYER_BOOSTER_1 = {
     "Name": "Fantasista +3",
 
     "Applied Stats": {
-        "ballControl": 3,
-        "dribbling": 3,
-        "finishing": 3,
-        "balance": 3
+        "Ball Control": 3,
+        "Dribbling": 3,
+        "Finishing": 3,
+        "Balance": 3
     },
 
     "Magnitude": 3,
@@ -1957,10 +1859,10 @@ PLAYER_BOOSTER_2 = {
     "Name": "Striker Instinct +1",
 
     "Applied Stats": {
-        "offensiveAwareness": 1,
-        "ballControl": 1,
-        "finishing": 1,
-        "acceleration": 1
+        "Attacking Awareness": 1,
+        "Ball Control": 1,
+        "Finishing": 1,
+        "Acceleration": 1
     },
 
     "Magnitude": 1,
@@ -2321,5 +2223,3 @@ if __name__ == "__main__":
         print(
             f"ERROR: {error}"
         )
-
-#credits : efhub for progression calculating
